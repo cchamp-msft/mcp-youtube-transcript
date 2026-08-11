@@ -1,4 +1,7 @@
-import { fetchTranscript } from "youtube-transcript";
+// The youtube-transcript package has "type":"module" but "main" points to a CJS
+// file, so the default entry point is broken. Import the ESM bundle directly.
+// @ts-expect-error — no declaration file for the ESM bundle path
+import { YoutubeTranscript } from "youtube-transcript/dist/youtube-transcript.esm.js";
 
 export interface TranscriptSnippet {
   text: string;
@@ -30,8 +33,8 @@ export async function getTranscriptSnippets(
   lang: string,
 ): Promise<TranscriptSnippet[]> {
   const videoId = extractVideoId(url);
-  const raw = await fetchTranscript(videoId, { lang });
-  return raw.map((entry) => ({
+  const raw = await YoutubeTranscript.fetchTranscript(videoId, { lang });
+  return raw.map((entry: { text: string; offset: number; duration: number }) => ({
     text: entry.text,
     start: entry.offset,
     duration: entry.duration,
