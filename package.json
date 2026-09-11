@@ -2,6 +2,7 @@
   "name": "mcp-youtube-transcript",
   "version": "1.0.0",
   "description": "MCP server to fetch YouTube video transcripts",
+  "license": "MIT",
   "type": "module",
   "bin": {
     "mcp-youtube-transcript": "./build/index.js"
